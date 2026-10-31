@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sitio personal de Nacho JCR20.">
+  <title>Nacho JCR20 | Mi sitio</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #0d1d33;
+      --panel2: #102744;
+      --blue: #2389ff;
+      --cyan: #54d6ff;
+      --text: #f4f8ff;
+      --muted: #a9bdd4;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 80% 10%, rgba(35,137,255,.22), transparent 28rem),
+        radial-gradient(circle at 10% 45%, rgba(84,214,255,.10), transparent 24rem),
+        var(--bg);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(7,17,31,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(84,214,255,.15);
+    }
+    nav {
+      max-width: 1050px; margin: auto; padding: 14px 22px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .brand { font-weight: 800; letter-spacing: .08em; color: var(--cyan); }
+    nav a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: .95rem; }
+    nav a:hover { color: white; }
+    main { max-width: 1050px; margin: auto; padding: 0 22px; }
+    .hero {
+      min-height: 76vh; display: grid; place-items: center; text-align: center;
+      padding: 75px 0 55px;
+    }
+    .hero-inner { max-width: 760px; }
+    .tag {
+      display: inline-block; color: var(--cyan); border: 1px solid rgba(84,214,255,.4);
+      background: rgba(35,137,255,.10); border-radius: 999px; padding: 6px 14px;
+      font-size: .85rem; letter-spacing: .08em;
+    }
+    h1 { font-size: clamp(2.8rem, 8vw, 5.5rem); line-height: 1.04; margin: 22px 0 16px; }
+    h1 span { color: var(--cyan); text-shadow: 0 0 30px rgba(84,214,255,.25); }
+    .lead { color: var(--muted); font-size: clamp(1rem, 2.4vw, 1.2rem); margin: 0 auto 28px; }
+    .buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-block; padding: 12px 20px; border-radius: 12px;
+      text-decoration: none; font-weight: 700; transition: transform .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .primary { color: #03101e; background: linear-gradient(100deg, var(--cyan), var(--blue)); }
+    .secondary { color: var(--text); border: 1px solid rgba(169,189,212,.35); background: rgba(255,255,255,.04); }
+    section { padding: 58px 0; }
+    .section-title { font-size: 2rem; margin: 0 0 8px; }
+    .section-sub { color: var(--muted); margin: 0 0 24px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card {
+      background: linear-gradient(145deg, rgba(16,39,68,.92), rgba(13,29,51,.92));
+      border: 1px solid rgba(84,214,255,.15); border-radius: 18px; padding: 22px;
+      min-height: 150px;
+    }
+    .card .emoji { font-size: 1.8rem; }
+    .card h3 { margin: 10px 0 5px; }
+    .card p { margin: 0; color: var(--muted); }
+    .gallery {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .photo {
+      min-height: 150px; border-radius: 16px; border: 1px dashed rgba(84,214,255,.4);
+      background: linear-gradient(135deg, rgba(35,137,255,.18), rgba(84,214,255,.06));
+      display: grid; place-items: center; text-align: center; padding: 18px; color: var(--muted);
+    }
+    .contact {
+      text-align: center; padding: 34px; border-radius: 22px;
+      background: linear-gradient(120deg, rgba(35,137,255,.20), rgba(84,214,255,.08));
+      border: 1px solid rgba(84,214,255,.2);
+    }
+    footer { text-align: center; color: var(--muted); padding: 28px 20px; border-top: 1px solid rgba(84,214,255,.12); }
+    @media (max-width: 700px) {
+      nav { align-items: flex-start; flex-direction: column; }
+      nav a { margin: 0 14px 0 0; }
+      .grid, .gallery { grid-template-columns: 1fr; }
+      .hero { min-height: 65vh; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">NACHO JCR20</div>
+      <div>
+        <a href="#inicio">Inicio</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#galeria">Galería</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-inner">
+        <span class="tag">BIENVENIDO A MI SITIO</span>
+        <h1>Hola, soy <span>Nacho</span></h1>
+        <p class="lead">Este es mi espacio en Internet. Aquí puedes encontrar mis fotos, mis redes y un poco más sobre mí.</p>
+        <div class="buttons">
+          <a class="btn primary" href="https://www.instagram.com/nachojosr20/" target="_blank" rel="noopener">Visitar mi Instagram</a>
+          <a class="btn secondary" href="#sobre-mi">Conocer más</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre-mi">
+      <h2 class="section-title">Sobre mí</h2>
+      <p class="section-sub">Un poco sobre este sitio.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="emoji">🌐</div><h3>Mi página</h3>
+          <p>Un lugar para compartir mis cosas y tener todos mis enlaces en un solo sitio.</p>
+        </article>
+        <article class="card">
+          <div class="emoji">📸</div><h3>Mis fotos</h3>
+          <p>Próximamente voy a agregar imágenes y momentos que quiera compartir.</p>
+        </article>
+        <article class="card">
+          <div class="emoji">📱</div><h3 mis-redes="true">Mis redes</h3>
+          <p>También puedes encontrarme en Instagram.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="galeria">
+      <h2 class="section-title">Galería</h2>
+      <p class="section-sub">Estos espacios están preparados para agregar tus imágenes.</p>
+      <div class="gallery">
+        <div class="photo">🖼️<br>Agrega tu primera foto</div>
+        <div class="photo">🖼️<br>Agrega tu segunda foto</div>
+        <div class="photo">🖼️<br>Agrega tu tercera foto</div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="contact">
+        <h2 class="section-title">Encuéntrame</h2>
+        <p class="section-sub">Sígueme en Instagram para ver mis publicaciones.</p>
+        <a class="btn primary" href="https://www.instagram.com/nachojosr20/" target="_blank" rel="noopener">@nachojosr20</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Nacho JCR20 · Sitio personal</footer>
+</body>
+</html>
