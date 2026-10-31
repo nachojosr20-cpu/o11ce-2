@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O11CE | El desafío</title>
+<style>
+:root{--bg:#07111f;--panel:#102744;--blue:#2389ff;--cyan:#54d6ff;--text:#f4f8ff;--muted:#afc1d7;--good:#36d399;--bad:#ff6b78}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 80% 0%,#123e70 0,transparent 34rem),linear-gradient(145deg,#06101e,#0b1d34);color:var(--text);font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:22px}
+.wrap{width:min(760px,100%)}.top{text-align:center;margin-bottom:18px}.logo{font-weight:900;letter-spacing:.12em;color:var(--cyan);font-size:1rem}.top h1{font-size:clamp(2.2rem,7vw,4rem);margin:8px 0}.top p{color:var(--muted);margin:0}
+.panel{background:linear-gradient(145deg,rgba(16,39,68,.98),rgba(8,24,43,.98));border:1px solid #2c6594;border-radius:24px;padding:clamp(20px,5vw,36px);box-shadow:0 22px 70px #0008}
+.row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.95rem}.pill{background:#0a1b30;border:1px solid #2c6594;border-radius:99px;padding:7px 12px}
+.progress{height:8px;background:#071626;border-radius:9px;overflow:hidden;margin:18px 0 26px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .3s}
+.kicker{color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:.8rem}
+h2{font-size:clamp(1.35rem,4vw,2rem);line-height:1.25;margin:10px 0 22px}
+.question-image{height:170px;margin:12px 0 20px;border-radius:18px;overflow:hidden;border:1px solid #2c6594;background:linear-gradient(135deg,#0a1d34,#164779);display:grid;place-items:center}
+.question-image svg{width:100%;height:100%;display:block}
+
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}.answer{background:#0b2038;color:var(--text);border:1px solid #315a7d;border-radius:13px;padding:15px;text-align:left;font-size:1rem;cursor:pointer;min-height:62px}.answer:disabled{opacity:.5;cursor:not-allowed}.answer:not(:disabled):hover{border-color:var(--cyan);background:#12345a}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px}.btn{border:0;border-radius:12px;padding:13px 20px;font-weight:800;font-size:1rem;cursor:pointer}.primary{background:linear-gradient(100deg,var(--cyan),var(--blue));color:#061426}.secondary{background:#183653;color:var(--text);border:1px solid #426b8e}
+#wait{color:var(--cyan);font-weight:700}#feedback{min-height:28px;margin-top:17px;font-weight:700}.good{color:var(--good)}.bad{color:var(--bad)}
+.hidden{display:none}.result{text-align:center}.result strong{font-size:3rem;color:var(--cyan)}.small{font-size:.9rem;color:var(--muted)}
+@media(max-width:560px){.answers{grid-template-columns:1fr}.controls{align-items:stretch}.controls button{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><div class="logo">DESAFÍO DE FÚTBOL</div><h1>O11CE</h1><p>¡Demuestra cuánto sabes de los Halcones!</p></header>
+  <main class="panel" id="game">
+    <div class="row"><span class="pill" id="counter">Pregunta 1 de 10</span><span class="pill">Puntos: <b id="score">0</b></span></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="kicker">Tu desafío</div>
+    <div id="questionImage" class="question-image" role="img" aria-label="Ilustración relacionada con la pregunta"></div>
+    <h2 id="question">Preparando pregunta...</h2>
+    <div class="answers" id="answers"></div>
+    <div class="controls"><span id="wait">⏳ Espera 10 segundos para responder...</span><button class="btn primary hidden" id="next">Siguiente</button></div>
+    <div id="feedback" aria-live="polite"></div>
+  </main>
+  <section class="panel result hidden" id="result">
+    <div class="kicker">Partido terminado</div><h2>¡Terminaste el desafío O11CE!</h2>
+    <p>Tu puntuación:</p><strong id="finalScore">0/10</strong>
+    <p id="message"></p><button class="btn primary" id="restart">Jugar otra vez</button>
+  </section>
+  <p class="small" style="text-align:center;margin-top:16px">Juego de preguntas hecho por fans. O11CE y sus personajes pertenecen a sus respectivos titulares.</p>
+</div>
+<script>
+const questions = [
+ {q:"¿Cómo se llama el equipo de fútbol protagonista de O11CE?",a:["Los Halcones","Los Leones","Los Dragones","Los Pumas"],c:0,why:"El equipo protagonista de la serie se llama Los Halcones."},
+ {q:"¿Qué deporte es el centro de la historia de O11CE?",a:["Básquetbol","Fútbol","Rugby","Tenis"],c:1,why:"La historia gira alrededor del fútbol."},
+ {q:"¿Cómo se llama el protagonista de la serie?",a:["Gabo Moreti","Lorenzo Guevara","Joaquín Costa","Ricky Flores"],c:0,why:"Gabo Moreti es el protagonista de O11CE."},
+ {q:"¿En qué posición juega principalmente Gabo?",a:["Arquero","Defensor","Delantero","Árbitro"],c:2,why:"Gabo se destaca como delantero."},
+ {q:"¿Cómo se llama la escuela donde transcurre gran parte de la historia?",a:["IAD","Instituto Central","Colegio del Sur","Academia Norte"],c:0,why:"La historia transcurre en el Instituto Académico Deportivo (IAD)."},
+ {q:"¿Qué significa el número 11 del título O11CE?",a:["El número de jugadores de un equipo","La edad de Gabo","El número de la escuela","La cantidad de temporadas"],c:0,why:"Un equipo de fútbol tiene once jugadores en cancha."},
+ {q:"¿Qué buscan lograr los Halcones como equipo?",a:["Ganar competencias de fútbol","Ser una banda musical","Competir en natación","Abrir un restaurante"],c:0,why:"El objetivo deportivo del equipo es competir y ganar en fútbol."},
+ {q:"¿Qué valor es importante para que los Halcones jueguen bien juntos?",a:["Trabajar en equipo","Jugar cada uno por su cuenta","No entrenar","Ignorar las reglas"],c:0,why:"La cooperación y el trabajo en equipo son centrales en la historia."},
+ {q:"¿Qué tipo de lugar es el IAD?",a:["Una escuela deportiva","Un hospital","Un aeropuerto","Un estadio profesional"],c:0,why:"El IAD es un instituto académico y deportivo."},
+ {q:"¿Qué habilidad es fundamental para un jugador de fútbol?",a:["Controlar la pelota","Lanzar una pelota de bowling","Nadar bajo el agua","Manejar un karting"],c:0,why:"El control de pelota es una habilidad básica del fútbol."}
+];
+let order=[],index=0,score=0,locked=true,waitTimer=null;
+const $=id=>document.getElementById(id);
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+function start(){clearInterval(waitTimer);order=shuffle(questions);index=0;score=0;$("score").textContent=score;$("game").classList.remove("hidden");$("result").classList.add("hidden");showQuestion()}
+function makeIllustration(n){
+ const photos=[
+  "https://i.ytimg.com/vi/-FgWKMFN_7Y/maxresdefault.jpg",
+  "https://oem.com.mx/elsoldepuebla/img/20004758/1488479976/BASE_LANDSCAPE/1200/image.jpg",
+  "https://images.produ.com/noticias/0719/big-O11ceDisney.jpg",
+  "https://media.senscritique.com/media/000017807306/0/o11ce.jpg",
+  "https://media.minutouno.com/p/16e4db5f75473c29bacaa3a0081df28d/adjuntos/150/imagenes/042/341/0042341359/once.jpg"
+ ];
+ const captions=["Gabo Moreti y el escudo de O11CE","El elenco de Los Halcones","Los Halcones Dorados","El equipo de O11CE","Los Halcones en la cancha"];
+ const i=n%photos.length;
+ return `<img src="${photos[i]}" alt="${captions[i]}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentElement.textContent='Imagen no disponible. Revisa tu conexión.'">`;
+}
+function showQuestion(){
+ locked=true;const item=order[index];$("questionImage").innerHTML=makeIllustration(questions.indexOf(item));$("counter").textContent=`Pregunta ${index+1} de ${order.length}`;$("bar").style.width=`${index/order.length*100}%`;$("question").textContent=item.q;$("feedback").textContent="";$("feedback").className="";$("next").classList.add("hidden");
+ $("answers").innerHTML="";item.a.forEach((answer,i)=>{const b=document.createElement("button");b.className="answer";b.textContent=String.fromCharCode(65+i)+". "+answer;b.disabled=true;b.addEventListener("click",()=>choose(i));$("answers").appendChild(b)});
+ let remaining=10;$("wait").textContent=`⏳ Espera ${remaining} segundos para responder...`;waitTimer=setInterval(()=>{remaining--;$("wait").textContent=remaining>0?`⏳ Espera ${remaining} segundos para responder...`:"✅ ¡Ya puedes responder!";if(remaining<=0){clearInterval(waitTimer);locked=false;[...$("answers").children].forEach(b=>b.disabled=false)}},1000)
+}
+function choose(choice){if(locked)return;locked=true;clearInterval(waitTimer);const item=order[index];[...$("answers").children].forEach((b,i)=>{b.disabled=true;if(i===item.c)b.style.borderColor="var(--good)";if(i===choice&&choice!==item.c)b.style.borderColor="var(--bad)"});if(choice===item.c){score++;$("score").textContent=score;$("feedback").textContent="¡Correcto! "+item.why;$("feedback").className="good"}else{$("feedback").textContent="No es esa. "+item.why;$("feedback").className="bad"}$("wait").textContent="";$("next").textContent=index===order.length-1?"Ver resultado":"Siguiente pregunta";$("next").classList.remove("hidden")}
+$("next").addEventListener("click",()=>{index++;if(index<order.length)showQuestion();else finish()});
+function finish(){$("game").classList.add("hidden");$("result").classList.remove("hidden");$("bar").style.width="100%";$("finalScore").textContent=`${score}/${order.length}`;$("message").textContent=score===10?"¡Impresionante! ¡Conoces muchísimo O11CE!":score>=7?"¡Muy bien! Eres un gran fan de los Halcones.":score>=4?"¡Buen intento! Puedes volver a jugar y mejorar tu puntuación.":"¡Sigue practicando y vuelve a intentarlo!"}
+$("restart").addEventListener("click",start);start();
+</script>
+</body>
+</html>
